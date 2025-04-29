@@ -1305,6 +1305,9 @@ class Monitor extends BeanModel {
         // UP -> MAINTENANCE = not important
         return isFirstBeat ||
             (previousBeatStatus === MAINTENANCE && currentBeatStatus === DOWN) ||
+            (previousBeatStatus === MAINTENANCE && currentBeatStatus === UP) ||
+            (previousBeatStatus === UP && currentBeatStatus === MAINTENANCE) ||
+            (previousBeatStatus === DOWN && currentBeatStatus === MAINTENANCE) ||
             (previousBeatStatus === UP && currentBeatStatus === DOWN) ||
             (previousBeatStatus === DOWN && currentBeatStatus === UP) ||
             (previousBeatStatus === PENDING && currentBeatStatus === DOWN);
@@ -1324,8 +1327,10 @@ class Monitor extends BeanModel {
             let text;
             if (bean.status === UP) {
                 text = "✅ Up";
-            } else {
+            } else if(bean.status === DOWN) {
                 text = "🔴 Down";
+            } else if(bean.status === MAINTENANCE) {
+                text = "🔴 Maintenance";
             }
 
             let msg = `[${monitor.name}] [${text}] ${bean.msg}`;
