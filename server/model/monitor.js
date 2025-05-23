@@ -598,12 +598,11 @@ class Monitor extends BeanModel {
 
                 } else if (this.type === "port") {
                     bean.ping = await tcping(this.hostname, this.port);
-                    bean.msg = "";
+                    bean.msg = `Successful Response: ${bean.ping} ms`;
                     bean.status = UP;
-
                 } else if (this.type === "ping") {
                     bean.ping = await ping(this.hostname, this.ping_count, "", this.ping_numeric, this.packetSize, this.timeout, this.ping_per_request_timeout);
-                    bean.msg = "";
+                    bean.msg = `Successful Response: ${bean.ping} ms`;
                     bean.status = UP;
                 } else if (this.type === "push") {      // Type: Push
                     log.debug("monitor", `[${this.name}] Checking monitor at ${dayjs().format("YYYY-MM-DD HH:mm:ss.SSS")}`);
@@ -1318,10 +1317,11 @@ class Monitor extends BeanModel {
                     text = "🔴 Down";
                 }
             } else if (actualbean.status === MAINTENANCE) {
-                text = "🔵 In Maintenance";
+                text = "🔵 Under Maintenance";
             }
 
             let msg = `[${monitor.name}] [${text}] ${actualbean.msg}`;
+            log.debug('NOTIFICATION', msg);
 
             for (let notification of notificationList) {
                 try {
