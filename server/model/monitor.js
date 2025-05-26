@@ -806,10 +806,10 @@ class Monitor extends BeanModel {
                     let startTime = dayjs().valueOf();
 
                     await postgresQuery(this.databaseConnectionString, this.databaseQuery || "SELECT 1");
-
-                    bean.msg = "";
-                    bean.status = UP;
                     bean.ping = dayjs().valueOf() - startTime;
+                    bean.msg = `Successful Response: ${bean.ping} ms`;
+                    // bean.msg = await postgresQuery(this.databaseConnectionString, this.databaseQuery || "SELECT 1");
+                    bean.status = UP;
                 } else if (this.type === "mysql") {
                     let startTime = dayjs().valueOf();
 
