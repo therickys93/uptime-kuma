@@ -1334,12 +1334,12 @@ class Monitor extends BeanModel {
                 }
             } else if (actualbean.status === DOWN) {
                 if(previousbean.status === MAINTENANCE){
-                    text = "❌ Down After Maintenance";
+                    text = "🔴 Down After Maintenance";
                 } else {
-                    text = "❌ Down";
+                    text = "🔴 Down";
                 }
             } else if (actualbean.status === MAINTENANCE) {
-                text = "⚙️ Under Maintenance";
+                text = "🔵 Under Maintenance";
             }
 
             let msg = `[${monitor.name}] [${text}] ${actualbean.msg}`;
